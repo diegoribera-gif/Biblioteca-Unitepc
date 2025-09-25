@@ -1,15 +1,23 @@
 {
-    "version": 2,
-    "builds": [
-        {
-            "src": "VercelDeploy/wsgi.py",
-            "use" : "@vercel/python"
-        }
-    ],
-    "routes": [
-        {
-            "src": "/(.*)",
-            "dest" : "VercelDeploy/wsgi.py"
-        }
-    ]
+  "version": 2,
+  "builds": [
+    {
+      "src": "VercelDeploy/wsgi.py",
+      "use": "@vercel/python",
+      "config": {
+        "maxLambdaSize": "50mb"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "VercelDeploy/wsgi.py"
+    }
+  ],
+  "env": {
+    "SECRET_KEY": "@SECRET_KEY",
+    "DEBUG": "False",
+    "DATABASE_URL": "@DATABASE_URL"
+  }
 }

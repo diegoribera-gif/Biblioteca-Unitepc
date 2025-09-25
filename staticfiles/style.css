@@ -1,0 +1,45 @@
+.libros-container {
+    display: flex;
+    flex-direction: column; /* lista vertical */
+    gap: 10px; /* espacio entre libros */
+    margin-top: 20px;
+}
+
+.libro-item {
+    background-color: purple; /* cuadro morado */
+    color: white;
+    padding: 15px;
+    border-radius: 10px;
+    width: 300px; /* tamaño compacto */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.libro-item h4 {
+    margin: 0 0 5px 0;
+    font-size: 1rem;
+}
+
+.libro-item p {
+    margin: 2px 0;
+    font-size: 0.9rem;
+}
+
+.botones-libro {
+    margin-top: 10px;
+}
+
+.btn-editar, .btn-eliminar {
+    padding: 5px 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    color: white;
+    font-size: 0.9rem;
+    margin-right: 5px;
+}
+
+.btn-editar { background-color: #00bfff; }
+.btn-eliminar { background-color: #ff4d4d; }
+
+.btn-editar:hover, .btn-eliminar:hover { opacity: 0.8; }
+
+
