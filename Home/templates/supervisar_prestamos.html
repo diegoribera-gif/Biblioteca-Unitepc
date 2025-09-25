@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Supervisar Préstamos</title>
+</head>
+<body>
+    <h1>Préstamos y devoluciones</h1>
+    <table border="1" cellpadding="5">
+        <tr>
+            <th>Libro</th>
+            <th>Usuario</th>
+            <th>Fecha de préstamo</th>
+            <th>Fecha de devolución</th>
+            <th>Entregado</th>
+        </tr>
+        {% for p in prestamos %}
+        <tr>
+            <td>{{ p.libro.titulo }}</td>
+            <td>{{ p.usuario }}</td>
+            <td>{{ p.fecha_prestamo }}</td>
+            <td>{{ p.fecha_devolucion|default:"Pendiente" }}</td>
+            <td>{{ p.entregado|yesno:"Sí,No" }}</td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="5">No hay préstamos registrados</td></tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

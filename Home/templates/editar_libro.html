@@ -1,0 +1,9 @@
+<form method="post">
+    {% csrf_token %}
+    <input type="text" name="titulo" value="{{ libro.titulo }}" required>
+    <input type="text" name="editorial" value="{{ libro.editorial }}" required>
+    <input type="text" name="autor" value="{{ libro.autor }}" required>
+    <input type="number" name="cantidad" value="{{ libro.cantidad }}" required>
+    <input type="text" name="categoria" value="{{ libro.categoria }}" required>
+    <button type="submit" class="btn guardar">Guardar cambios</button>
+</form>

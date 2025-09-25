@@ -1,0 +1,53 @@
+<!-- Home/templates/Home/registrar_prestamo.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Registrar Préstamo</title>
+    <style>
+        body { font-family: Arial; background: #f9f9f9; padding: 20px; }
+        .form-container { background: #f2f2f2; padding: 20px; border-radius: 8px; max-width: 500px; margin: auto; }
+        input, select, button { padding: 8px; margin: 5px 0; width: 100%; box-sizing: border-box; }
+        button { background: purple; color: white; border: none; cursor: pointer; }
+        .guardar { background: green; }
+        .cancelar { background: red; }
+    </style>
+</head>
+<body>
+    <h1>Registrar Préstamo</h1>
+    <div class="form-container">
+        <form method="POST">
+            {% csrf_token %}
+
+            <!-- Código del estudiante (readonly) -->
+            <label>Código del Estudiante:</label>
+            <input type="text" name="codigo" value="{{ codigo }}" readonly>
+
+            <!-- Nombre del estudiante (readonly) -->
+            <label>Nombre del Estudiante:</label>
+            <input type="text" name="nombre" value="{{ nombre }}" readonly>
+
+            <!-- Selección de libro -->
+            <label>Libro:</label>
+            <select name="libro" required>
+                {% for libro in libros %}
+                <option value="{{ libro.id }}">{{ libro.titulo }} - {{ libro.autor }}</option>
+                {% endfor %}
+            </select>
+
+            <!-- Fecha de préstamo -->
+            <label>Fecha de Préstamo:</label>
+            <input type="date" name="fecha_prestamo" value="{{ today|date:'Y-m-d' }}" required>
+
+            <!-- Fecha de devolución -->
+            <label>Fecha de Devolución:</label>
+            <input type="date" name="fecha_devolucion" required>
+
+            <!-- Botones -->
+            <button type="submit" class="guardar">Realizar Préstamo del Libro</button>
+            <a href="{% url 'bibliotecario_dashboard' %}"><button type="button" class="cancelar">Cancelar</button></a>
+        </form>
+    </div>
+</body>
+</html>
+

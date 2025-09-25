@@ -3,41 +3,148 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro de Productos</title>
+    <title>Login Biblioteca</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background: linear-gradient(to right, #a8e063, #56ab2f);
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            flex-direction: column;
+            margin: 0;
+            background: white; /* Fondo blanco */
         }
-        h1 {
-            color: red;
-            margin-bottom: 40px;
+
+        .form-container {
+            width: 400px;
+            padding: 40px;
+            border-radius: 15px;
+            background: #f2f2f2; /* plomo blanquecino */
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            position: relative;
         }
-        .btn {
-            padding: 15px 30px;
-            margin: 10px;
+
+        .titulo-bibli {
+            font-size: 2.8rem;
+            font-weight: 900; /* más grueso */
+            margin-bottom: 5px;
+            letter-spacing: 2px;
+            background: linear-gradient(to right, purple 0% 45%, #006666 45% 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .unitepc {
+            text-align: left;
+            margin-top: 0;
+            margin-bottom: 25px;
+            margin-left: 145px; /* alineado con la O */
+            font-size: 1.3rem; /* más grande */
+            font-weight: bold;
+            color: #006666; /* verde turquesa oscuro */
+        }
+
+        .input-group {
+            position: relative;
+            margin: 15px 0;
+        }
+
+        .input-group input {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 12px 35px 12px 35px;
+            border: 1px solid #555;
+            border-radius: 10px;
+            font-size: 1rem;
+            background: transparent;
+            outline: none;
+        }
+
+        .input-group input::placeholder {
+            color: #666;
+        }
+
+        .input-group .icon-left {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
             font-size: 18px;
+            color: #555;
+        }
+
+        .input-group .icon-right {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 18px;
+            color: #555;
+            cursor: pointer;
+        }
+
+        .btn {
+            margin-top: 20px;
+            padding: 12px 25px;
+            background-color: purple; /* Botón morado */
+            color: white;
             border: none;
             border-radius: 10px;
             cursor: pointer;
-            color: white;
+            font-size: 1.1rem;
             font-weight: bold;
+            transition: 0.3s;
+            width: 100%;
         }
-        .btn-agregar { background: #28a745; }
-        .btn-agregar:hover { background: #218838; }
-        .btn-listar { background: #007bff; }
-        .btn-listar:hover { background: #0069d9; }
+
+        .btn:hover {
+            background-color: #5a0ea1;
+            transform: scale(1.05);
+        }
     </style>
+    <!-- Iconos de FontAwesome -->
+    <script src="https://kit.fontawesome.com/yourkitid.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <h1>REGISTROS DE PRODUCTOS DE DIEGO RIBERA</h1>
-    <a href="{% url 'agregar_producto' %}" class="btn btn-agregar">Agregar Nuevo Producto</a>
-    <a href="{% url 'lista_productos' %}" class="btn btn-listar">Productos Registrados</a>
+    <div class="form-container">
+        <h1 class="titulo-bibli">BIBLIOTECA</h1>
+        <div class="unitepc">Unitepc</div>
+
+        <form method="post">
+            {% csrf_token %}
+            <div class="input-group">
+                <i class="fas fa-user icon-left"></i>
+                <input type="text" name="username" placeholder="Usuario" required>
+            </div>
+
+            <div class="input-group">
+                <i class="fas fa-key icon-left"></i>
+                <input type="password" id="password" name="password" placeholder="Contraseña" required>
+                <i class="fas fa-eye icon-right" onclick="togglePassword()"></i>
+            </div>
+
+            <button type="submit" class="btn">Acceso</button>
+        </form>
+    </div>
+
+    <script>
+        function togglePassword() {
+            const pass = document.getElementById("password");
+            const eye = event.target;
+            if (pass.type === "password") {
+                pass.type = "text";
+                eye.classList.remove("fa-eye");
+                eye.classList.add("fa-eye-slash");
+            } else {
+                pass.type = "password";
+                eye.classList.remove("fa-eye-slash");
+                eye.classList.add("fa-eye");
+            }
+        }
+    </script>
 </body>
 </html>
+
+
 

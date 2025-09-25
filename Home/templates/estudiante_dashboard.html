@@ -1,0 +1,235 @@
+<!-- estudiante_dashboard.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Panel de Estudiante</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f5f5f5;
+        }
+        header {
+            background-color: #fff;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #ccc;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+        header span {
+            display: block;
+            font-size: 16px;
+            color: #555;
+        }
+        .logo-texto {
+            font-weight: bold;
+        }
+        .logo-texto .morado { color: #800080; } /* Morado */
+        .logo-texto .verde { color: #008080; } /* Verde turquesa oscuro */
+
+        .container {
+            display: flex;
+            height: calc(100vh - 80px);
+        }
+        nav {
+            width: 220px;
+            background-color: #2c3e50;
+            padding: 20px;
+            color: #fff;
+        }
+        nav button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            background-color: #34495e;
+            color: #fff;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        nav button:hover {
+            background-color: #1abc9c;
+        }
+        main {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        .cuadro {
+            background-color: #e6e6e6;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+        }
+        .cuadro-morado {
+            background-color: #800080;
+            color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin: 6px 0 12px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .btn {
+            padding: 10px 15px;
+            margin-right: 10px;
+            border: none;
+            cursor: pointer;
+        }
+        .btn-consulta { background-color: #800080; color: #fff; }
+        .btn-cancelar { background-color: #ccc; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div>
+            <h1>Bienvenido, {{ username }}</h1>
+            <span>Panel de Estudiante</span>
+        </div>
+        <div style="text-align:right;">
+            <h1 class="logo-texto"><span class="morado">BIBLI</span><span class="verde">OTECA</span></h1>
+            <span>UNITEPC</span>
+        </div>
+    </header>
+
+    <div class="container">
+        <nav>
+            <button onclick="mostrarSeccion('consultar')">Consultar Catálogos</button>
+            <button onclick="mostrarSeccion('registrar')">Registrar Préstamo</button>
+            <button onclick="mostrarSeccion('historial')">Historial de Préstamos</button>
+        </nav>
+
+        <main>
+            <!-- Consultar Catálogos -->
+            <div id="consultar" class="seccion" style="display:none;">
+                <div class="cuadro">
+                    <h2>¿Qué libro estás buscando?</h2>
+                    <form method="POST" action="{% url 'consultar_disponibilidad' %}">
+                        {% csrf_token %}
+                        <label>Título del libro</label>
+                        <input type="text" name="consulta_libro">
+                        <label>Autor</label>
+                        <input type="text" name="consulta_autor">
+                        <label>Editorial</label>
+                        <input type="text" name="consulta_editorial">
+                        <button type="submit" class="btn btn-consulta">Realizar Consulta</button>
+                        <button type="reset" class="btn btn-cancelar">Cancelar</button>
+                    </form>
+                </div>
+
+                {% if libro %}
+                    {% if disponibilidad > 0 %}
+                        <div class="cuadro-morado">
+                            <h2>Libro Disponible</h2>
+                            <p><strong>Título:</strong> {{ libro.titulo }}</p>
+                            <p><strong>Autor:</strong> {{ libro.autor }}</p>
+                            <p><strong>Editorial:</strong> {{ libro.editorial }}</p>
+                            <p><strong>Categoría:</strong> {{ libro.categoria }}</p>
+                        </div>
+                    {% else %}
+                        <div class="cuadro">
+                            <h2>Libro no Disponible</h2>
+                            <p>Otros libros similares:</p>
+                            <ul>
+                                {% for libro_similar in libros_similares %}
+                                    <li>{{ libro_similar.titulo }} - {{ libro_similar.autor }}</li>
+                                {% empty %}
+                                    <li>No hay libros similares</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                {% endif %}
+            </div>
+
+            <!-- Registrar Préstamo -->
+<div id="registrar" class="seccion" style="display:none;">
+    <div class="cuadro">
+        <h2>Registrar Préstamo</h2>
+        <form method="POST" action="{% url 'registrar_prestamo' %}">
+            {% csrf_token %}
+            <label>Código del estudiante</label>
+            <input type="text" name="codigo" value="{{ username }}">
+            <label>Nombre del estudiante</label>
+            <input type="text" name="nombre" value="{{ username }}">
+            <label>Título del libro</label>
+            <input type="text" name="titulo">
+            <label>Fecha de préstamo</label>
+            <input type="date" name="fecha_prestamo">
+            <label>Fecha de devolución</label>
+            <input type="date" name="fecha_devolucion">
+            <button type="submit" class="btn btn-consulta">Realizar Préstamo del Libro</button>
+            <button type="reset" class="btn btn-cancelar">Cancelar</button>
+        </form>
+        {% if messages %}
+        <div>
+            {% for message in messages %}
+            <p>{{ message }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+</div>
+            <!-- Historial de Préstamos -->
+            <div id="historial" class="seccion" style="display:none;">
+                <div class="cuadro-morado">
+                    <h2>Historial de Préstamos</h2>
+                    <table>
+                        <tr>
+                            <th>Título</th>
+                            <th>Fecha de Préstamo</th>
+                            <th>Fecha de Devolución</th>
+                            <th>Devuelto</th>
+                        </tr>
+                        {% for prestamo in prestamos %}
+                        <tr>
+                            <td>{{ prestamo.libro.titulo }}</td>
+                            <td>{{ prestamo.fecha_prestamo }}</td>
+                            <td>{{ prestamo.fecha_devolucion|default:"-" }}</td>
+                            <td>{{ prestamo.devuelto }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="4">No hay préstamos realizados</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        function mostrarSeccion(seccion) {
+            let secciones = document.querySelectorAll('.seccion');
+            secciones.forEach(s => s.style.display = 'none');
+            document.getElementById(seccion).style.display = 'block';
+        }
+        // Mostrar al cargar la sección de consulta por defecto
+        mostrarSeccion('consultar');
+    </script>
+</body>
+</html>

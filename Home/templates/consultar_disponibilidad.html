@@ -1,0 +1,27 @@
+<!-- Home/templates/Home/consultar_disponibilidad.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Consultar Disponibilidad</title>
+    <style>
+        body { font-family: Arial; background: #f9f9f9; padding: 20px; }
+        input, button { padding: 8px; margin: 5px 0; width: 100%; }
+        button { background: purple; color: white; border: none; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>Consultar Disponibilidad de Libros</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <input type="text" name="consulta_libro" placeholder="Título del libro" required>
+        <button type="submit">Consultar</button>
+    </form>
+
+    {% if disponibilidad != None %}
+        <p>Libros disponibles: {{ disponibilidad }}</p>
+    {% endif %}
+
+    <a href="{% url 'bibliotecario_dashboard' %}">Volver al panel</a>
+</body>
+</html>

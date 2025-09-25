@@ -1,0 +1,40 @@
+<!-- Home/templates/Home/libros_prestados.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Libros Prestados</title>
+    <style>
+        body { font-family: Arial; background: #f9f9f9; padding: 20px; }
+        table { border-collapse: collapse; width: 100%; background: #fff; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+        th { background: purple; color: white; }
+    </style>
+</head>
+<body>
+    <h1>Libros Prestados</h1>
+    <table>
+        <tr>
+            <th>Código Estudiante</th>
+            <th>Nombre Estudiante</th>
+            <th>Libro</th>
+            <th>Fecha Prestamo</th>
+            <th>Fecha Devolucion</th>
+            <th>Devuelto</th>
+        </tr>
+        {% for prestamo in prestamos %}
+        <tr>
+            <td>{{ prestamo.codigo_estudiante }}</td>
+            <td>{{ prestamo.nombre_estudiante }}</td>
+            <td>{{ prestamo.titulo }}</td>
+            <td>{{ prestamo.fecha_prestamo }}</td>
+            <td>{{ prestamo.fecha_devolucion }}</td>
+            <td>{{ prestamo.devuelto }}</td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="6">No hay préstamos registrados</td></tr>
+        {% endfor %}
+    </table>
+    <a href="{% url 'bibliotecario_dashboard' %}">Volver al panel</a>
+</body>
+</html>

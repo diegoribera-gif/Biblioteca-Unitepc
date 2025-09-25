@@ -1,12 +1,17 @@
 from django import forms
-from .models import Producto
+from .models import Libro
 
-class ProductoForm(forms.ModelForm):
+
+class LibroForm(forms.ModelForm):
     class Meta:
-        model = Producto
-        fields = ['nombre', 'precio', 'descripcion']
+        model = Libro
+        fields = ["titulo", "autor", "editorial", "cantidad", "categoria"]
         widgets = {
-            'nombre': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombre del producto'}),
-            'precio': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Precio'}),
-            'descripcion': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Descripción'}),
+            "titulo": forms.TextInput(attrs={"class": "form-control"}),
+            "autor": forms.TextInput(attrs={"class": "form-control"}),
+            "editorial": forms.TextInput(attrs={"class": "form-control"}),
+            "cantidad": forms.NumberInput(attrs={"class": "form-control"}),
+            "categoria": forms.TextInput(attrs={"class": "form-control"}),
         }
+
+

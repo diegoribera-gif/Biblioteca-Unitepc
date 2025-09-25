@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Registrar Libro</title>
+    <style>
+        body { font-family: Arial, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; background: white; margin:0; }
+        .form-container { width: 400px; padding: 30px; background: #f2f2f2; border-radius: 15px; box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
+        h2 { text-align: center; color: purple; }
+        input { width: 100%; margin: 10px 0; padding: 10px; border: 1px solid black; border-radius: 8px; background: transparent; }
+        .btn { padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; margin-top: 10px; width: 48%; }
+        .guardar { background: green; color: white; }
+        .cancelar { background: red; color: white; }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Rellene los datos</h2>
+        <form method="post">
+            {% csrf_token %}
+            <input type="text" name="titulo" placeholder="Título" required>
+            <input type="text" name="editorial" placeholder="Editorial" required>
+            <input type="text" name="autor" placeholder="Autor" required>
+            <input type="number" name="cantidad" placeholder="Cantidad" required>
+            <input type="text" name="categoria" placeholder="Categoría" required>
+            <div style="display:flex;justify-content:space-between;">
+                <button type="submit" name="guardar" class="btn guardar">Guardar</button>
+                <button type="submit" name="cancelar" class="btn cancelar">Cancelar</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
+

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Panel Administrador</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            background: #f9f9f9; 
+            margin: 20px; 
+        }
+        h1 { color: purple; }
+        h2 { color: #4b0082; } /* morado para título de libros registrados */
+
+        .menu { margin-bottom: 20px; }
+        .menu button { margin-right: 10px; padding: 10px; cursor: pointer; }
+
+        .messages { color: green; font-weight: bold; }
+
+        /* Contenedor de libros */
+        .libros-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        /* Cada libro */
+        .libro-item {
+            background-color: purple;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            width: 300px; /* ancho fijo pero ajustable */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .libro-item h4 {
+            margin: 0 0 5px 0;
+            font-size: 1rem;
+        }
+
+        .libro-item p {
+            margin: 2px 0;
+            font-size: 0.9rem;
+        }
+
+        /* Botones de libro */
+        .botones-libro {
+            margin-top: 10px;
+        }
+
+        .btn-editar, .btn-eliminar {
+            padding: 5px 10px;
+            border-radius: 5px;
+            text-decoration: none;
+            color: white;
+            font-size: 0.9rem;
+            margin-right: 5px;
+        }
+
+        .btn-editar { background-color: #00bfff; }
+        .btn-eliminar { background-color: #ff4d4d; }
+
+        .btn-editar:hover, .btn-eliminar:hover { opacity: 0.8; }
+    </style>
+</head>
+<body>
+    <h1>Panel Administrador</h1>
+
+    {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <div class="menu">
+        <a href="{% url 'registrar_libro' %}"><button>Registrar Libros</button></a>
+        <a href="{% url 'supervisar_prestamos' %}"><button>Supervisar Préstamos</button></a>
+        <a href="{% url 'cerrar_sesion' %}"><button style="background:red;color:white;">Cerrar Sesión</button></a>
+    </div>
+
+    <h2>Libros registrados</h2>
+    <div class="libros-container">
+        {% for libro in libros %}
+        <div class="libro-item">
+            <h4>{{ libro.titulo }} - {{ libro.autor }}</h4>
+            <p>Editorial: {{ libro.editorial }}</p>
+            <p>Cantidad: {{ libro.cantidad }} | Categoría: {{ libro.categoria }}</p>
+            <div class="botones-libro">
+                <a href="{% url 'editar_libro' libro.id %}" class="btn-editar">Editar</a>
+                <a href="{% url 'eliminar_libro' libro.id %}" class="btn-eliminar">Eliminar</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+</body>
+</html>
+
+

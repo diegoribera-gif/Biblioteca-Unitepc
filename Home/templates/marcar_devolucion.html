@@ -1,0 +1,50 @@
+<!-- Home/templates/Home/marcar_devolucion.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Marcar Devolución</title>
+    <style>
+        body { font-family: Arial; background: #f9f9f9; padding: 20px; }
+        .form-container { background: #f2f2f2; padding: 20px; border-radius: 8px; max-width: 500px; margin: auto; }
+        input, button { padding: 8px; margin: 5px 0; width: 100%; }
+        button { background: purple; color: white; border: none; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>Marcar Devolución</h1>
+    <div class="form-container">
+        <form method="POST">
+            {% csrf_token %}
+            <input type="text" name="codigo" placeholder="Código del estudiante" required>
+            <input type="text" name="nombre" placeholder="Nombre del estudiante" required>
+            <input type="text" name="titulo" placeholder="Título del libro" required>
+            <input type="text" name="estado" placeholder="Estado del libro" required>
+            <button type="submit">Registrar Devolución</button>
+        </form>
+    </div>
+
+    <h2>Devoluciones Registradas</h2>
+    <table>
+        <tr>
+            <th>Código Estudiante</th>
+            <th>Nombre</th>
+            <th>Libro</th>
+            <th>Fecha Devolución</th>
+            <th>Estado</th>
+        </tr>
+        {% for devolucion in devoluciones %}
+        <tr>
+            <td>{{ devolucion.codigo_estudiante }}</td>
+            <td>{{ devolucion.nombre_estudiante }}</td>
+            <td>{{ devolucion.libro.titulo }}</td>
+            <td>{{ devolucion.fecha_devolucion }}</td>
+            <td>{{ devolucion.estado }}</td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="5">No hay devoluciones registradas</td></tr>
+        {% endfor %}
+    </table>
+    <a href="{% url 'bibliotecario_dashboard' %}">Volver al panel</a>
+</body>
+</html>
